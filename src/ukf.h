@@ -56,7 +56,7 @@ public:
     double std_radrd_ ;
 
   ///* Weights of sigma points
-  VectorXd weights_;
+    VectorXd weights_;
 
   ///* State dimension
     int n_x_;
@@ -102,10 +102,6 @@ public:
    * @param meas_package The measurement at k+1
    */
     void UpdateRadar(MeasurementPackage meas_package);
-    
-    void GenerateSigmaPoints(MatrixXd* Xsig_out, const VectorXd x);
-    
-    void SigmaPointPrediction(MatrixXd* Xsig_out, MatrixXd Xsig_aug);
 };
 
 #endif /* UKF_H */
