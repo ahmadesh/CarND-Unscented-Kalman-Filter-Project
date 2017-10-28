@@ -28,8 +28,23 @@ std::string hasData(std::string s) {
 
 int main()
 {
-    std::cout << "1";
-
+    string out_file_name_ = "./output";
+    ofstream out_file_(out_file_name_.c_str(), ofstream::out);
+    
+    // column names for output file
+    out_file_ << "px" << "\t";
+    out_file_ << "py" << "\t";
+    out_file_ << "v" << "\t";
+    out_file_ << "yaw_angle" << "\t";
+    out_file_ << "yaw_rate" << "\t";
+    out_file_ << "px_measured" << "\t";
+    out_file_ << "py_measured" << "\t";
+    out_file_ << "px_true" << "\t";
+    out_file_ << "py_true" << "\t";
+    out_file_ << "vx_true" << "\t";
+    out_file_ << "vy_true" << "\t";
+    out_file_ << "NIS" << "\n";
+    
   uWS::Hub h;
 
   // Create a Kalman Filter instance
@@ -39,7 +54,7 @@ int main()
   vector<VectorXd> estimations;
   vector<VectorXd> ground_truth;
 
-  h.onMessage([&ukf,&tools,&estimations,&ground_truth](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
+  h.onMessage([&ukf,&tools,&estimations,&ground_truth, &out_file_](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
@@ -107,7 +122,7 @@ int main()
           
           //Call ProcessMeasurment(meas_package) for Kalman filter
     	  ukf.ProcessMeasurement(meas_package);
-
+            
     	  //Push the current estimated x,y positon from the Kalman filter's state vector
 
     	  VectorXd estimate(4);
@@ -138,7 +153,47 @@ int main()
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
           // std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-	  
+          
+          //////////// ********* outputing all data
+            // output the estimation
+            out_file_ << ukf.x_(0) << "\t"; // pos1 - est
+            out_file_ << ukf.x_(1) << "\t"; // pos2 - est
+            out_file_ << ukf.x_(2) << "\t"; // vel_abs -est
+            out_file_ << ukf.x_(3) << "\t"; // yaw_angle -est
+            out_file_ << ukf.x_(4) << "\t"; // yaw_rate -est
+            // output the measurements
+            if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
+                // output the estimation
+                
+                // p1 - meas
+                out_file_ << meas_package.raw_measurements_(0) << "\t";
+                
+                // p2 - meas
+                out_file_ << meas_package.raw_measurements_(1) << "\t";
+            } else if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+                // output the estimation in the cartesian coordinates
+                float ro = meas_package.raw_measurements_(0);
+                float phi = meas_package.raw_measurements_(1);
+                out_file_ << ro * cos(phi) << "\t"; // p1_meas
+                out_file_ << ro * sin(phi) << "\t"; // p2_meas
+            }
+            
+            // output the ground truth packages
+            out_file_ << x_gt << "\t";
+            out_file_ << y_gt << "\t";
+            out_file_ << vx_gt << "\t";
+            out_file_ << vy_gt << "\t";
+            
+            // output the NIS values
+            
+            if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
+                out_file_ << ukf.lidar_nis << "\n";
+            } else if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+                out_file_ << ukf.radar_nis << "\n";
+            }
+            
+            ////// **************
+            
         }
       } else {
         
