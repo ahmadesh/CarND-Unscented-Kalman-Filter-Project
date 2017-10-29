@@ -19,7 +19,7 @@ This project uses the Term 2 Simulator which can be downloaded [here](https://gi
 1. Clone this repo.
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make` 
-4. Run the file: `./ExtendedKF`. 
+4. Run the file: `./UnscentedKF`. 
 
 
 ## Sensor fusion algorithm
