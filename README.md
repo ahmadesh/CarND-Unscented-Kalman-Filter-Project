@@ -40,7 +40,7 @@ In order to tune the process noise values, standard deviation longitudinal and y
 
 The final state estimation [px, py, vx, vy] RMSE with both sensors was reported to be [0.0821, 0.0877, 0.3674, 0.2693] which satisfies the project expection of [.09, .10, .40, .30]. This RMSE results are better than the estimations using Extended Kalman Filter reported in the previous project [0.0964, 0.0852, 0.4151, 0.4313]. Here is the last frame of simulation in the simulator window with the calculated RMSE: 
 
-<img src="./output_images/final_RMSE.png.png" width="500" alt="Combined Image" />
+<img src="./output_images/final_RMSE.png" width="500" alt="Combined Image" />
 
 I also tried using only one of the sensors to estimate the states that showed lower RMSE results. However, as mentioned before using both sensors results in lower RMSE that shows the power of sensor fusion using Kalman Filter.  
 
