@@ -30,11 +30,11 @@ Here I plot the X,Y position estimations using UKF, measrument values and ground
 
 <img src="./output_images/Position.png" width="900" alt="Combined Image" />
 
-Also, I plotted the estimated velocity and ground truth velocity. The estimations start from the initial velocity that I selected to be 0, and quickly converges around the fround truth velocity.  
+Also, I plotted the estimated velocity and ground truth velocity. The estimations start from the initial velocity that I selected to be 0, and quickly converges around the ground truth velocity.  
 
 <img src="./output_images/Velocity.png" width="500" alt="Combined Image" />
 
-In order to tune the process noise values, standard deviation longitudinal and yaw acceleration `std_a_` and `std_yawdd_`, I looked at the NIS values as shown next. The 95% line for the NIS values with 5 state variables is also shown with red line. The results shows that most NIS values are in the acceptable range.
+In order to tune the process noise values, standard deviation longitudinal and yaw acceleration (`std_a_`, `std_yawdd_`), I looked at the NIS values as shown next. The 5% line for the NIS values with 5 state variables that is 7.8 is also shown with red line. The results shows that most NIS values are in the acceptable range.
 
 <img src="./output_images/NIS.png" width="500" alt="Combined Image" />
 
