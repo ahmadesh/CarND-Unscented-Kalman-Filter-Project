@@ -28,11 +28,11 @@ I followed the Unscented Kalman Filter algorithm to predict and update based on 
 ## Results
 Here I plot the X,Y position estimations using UKF, measrument values and ground truth. The UKF results are matching the ground truth very well. 
 
-<img src="./output_images/Position.png" width="500" alt="Combined Image" />
+<img src="./output_images/Position.png" width="900" alt="Combined Image" />
 
 Also, I plotted the estimated velocity and ground truth velocity. The estimations start from the initial velocity that I selected to be 0, and quickly converges around the fround truth velocity.  
 
-<img src="./output_images/velocity.png" width="500" alt="Combined Image" />
+<img src="./output_images/Velocity.png" width="500" alt="Combined Image" />
 
 In order to tune the process noise values, standard deviation longitudinal and yaw acceleration `std_a_` and `std_yawdd_`, I looked at the NIS values as shown next. The 95% line for the NIS values with 5 state variables is also shown with red line. The results shows that most NIS values are in the acceptable range.
 
